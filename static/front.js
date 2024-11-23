@@ -1,53 +1,10 @@
 
-let Lessons = [
-    {
-        id:1001,
-        subject:"Math",
-        location:"London",
-        price: 100,
-        image: "",
-        spaces: 5
-    },
-    {
-        id:1001,
-        subject:"Math",
-        location:"Oxford",
-        price: 100,
-        image: "",
-        Spaces: 5
-    },
-    {
-        id:1001,
-        subject:"English",
-        location:"London",
-        price: 100,
-        image: "",
-        spaces: 5
-    },
-    {
-        id:1001,
-        subject:"English",
-        location:"York",
-        price: 80,
-        image: "",
-        spaces: 5
-    },
-    {
-        id:1001,
-        subject:"Music",
-        location:"Bristol",
-        price: 90,
-        image: "",
-        spaces: 5
-    }
-]
-
 var app = new Vue({
     el: "#app",
     data() {
         return {
             showLessons: true,
-            Lessons:Lessons,
+            Lessons:{},
             order: {
                 Fname: ``,
                 Lname: ``,
@@ -57,12 +14,12 @@ var app = new Vue({
         };
     },
     created:function(){
-        fetch("http://localhost:3000/collections/products").then(
+        fetch("http://localhost:3000/collections/Lessons").then(
             function(response) {
                 response.json().then(
                     function(json) {
-                        webstore.products = json;
-                        console.log(webstore.products);
+                        app.Lessons = json;
+                        console.log(app.Lessons);
                     }
                 )
             }
@@ -95,6 +52,24 @@ var app = new Vue({
         },
         itemleft(lesson) {
             return lesson.spaces;
+        },
+        async postData() {
+            let data = this.order;
+            console.log('Posting: ', data);
+            try{
+                const response = await fetch('/collections/Orders', { 
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+
+                console.log(response.status);
+                const result = await response.json(); 
+                console.log('Success:', result); 
+                return result;
+            }catch(err){
+                console.error(err.message);
+            }
         }
     },
     computed: {

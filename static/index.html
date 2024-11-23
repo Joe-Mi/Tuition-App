@@ -17,17 +17,19 @@
         </div>
         
         <main class="P_body">
-            <div class="card" v-if="showLessons" v-for="lesson in Lessons">
-                <figure>
+            <div class="P_body" v-if="showLessons">
+                <div class="card" v-for="lesson in Lessons">
+                    <figure>
                     <img class="width : 50px" src="lesson.image" alt="lesson-IMG">
-                </figure>
-                <p >Subject: {{lesson.subject}}</p>
-                <p >Location: {{lesson.location}}</p>
-                <p >Price: £{{lesson.price}}</p>
-                <p >Space: {{lesson.spaces}}</p>
-                <button type="button" v-if="CanAddToCart(lesson)" v-on:click="addToCart(lesson)">add to cart</button>
-                <div v-else>
-                    <button disabled>Add to cart</button>
+                    </figure>
+                    <p >Subject: {{lesson.subject}}</p>
+                    <p >Location: {{lesson.location}}</p>
+                    <p >Price: £{{lesson.price}}</p>
+                    <p >Space: {{lesson.spaces}}</p>
+                    <button type="button" v-if="CanAddToCart(lesson)" v-on:click="addToCart(lesson)">add to cart</button>
+                    <div v-else>
+                        <button disabled>Add to cart</button>
+                    </div>
                 </div>
             </div>
             <div v-else>
@@ -41,7 +43,9 @@
 
                 <label for="address">Phone:</label>
                 <input id="address" v-model="order.Phone"/>
-                <button type="button" v-if="CanAddToCart(lesson)" v-on:click="addToCart(lessont)">Check out</button>
+                <button type="button" v-on:click="postData()">
+                    Place order
+                </button>
             </div>
         </main>
         <div class="footer"></div>
