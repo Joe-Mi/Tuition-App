@@ -12,6 +12,23 @@
     grid-row: 2 / 3;
     background-color: darkblue;
     height: 100vh;
+    display: grid;
+    grid-template-rows: 50px auto;
+    padding: 5px;
+}
+
+.S_header{
+    grid-row: 1 / 2;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    background-color: brown;
+}
+
+.S_body{
+    grid-row: 2 / 3;
+    background-color: lightblue;
+    height: 100vh;
     display: flex;
     flex-wrap: wrap;
     padding: 5px;

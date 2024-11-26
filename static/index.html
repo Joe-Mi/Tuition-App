@@ -17,7 +17,25 @@
         </div>
         
         <main class="P_body">
-            <div class="P_body" v-if="showLessons">
+            <div class="S_header">
+                <h2>Filter:</h2>
+                <select v-model="filter.method">
+                    <option disabled value="">Filter</option>
+                    <option value=1>Subject</option>
+                    <option value=2>Location</option>
+                    <option value=3>Spaces</option>
+                    <option value=4>Price</option>
+                </select>
+                <p>
+                    <input type="radio" id="Asc" value=1 v-model="filter.order">
+                    <label for="Asc">:Ascending</label>
+                    <input type="radio" id="Desc" value=-1 v-model="filter.order">
+                    <label for="Desc">:Descending</label>
+                </p>
+                <button type="button" v-on:click="sortLessons">filter</button>
+            </div>
+            <div class="S_body" v-if="showLessons">
+                
                 <div class="card" v-for="lesson in Lessons">
                     <figure>
                     <img class="width : 50px" src="lesson.image" alt="lesson-IMG">
@@ -36,13 +54,13 @@
                 <h2>Shopping Cart:</h2>
                 <h2>Checkout:</h2>
                 <label for="Fname">First name: </label>
-                <input id="Fname" v-model="order.Fname"/>
+                <input id="Fname" v-model.trim="order.Fname"/>
 
                 <label for="Lname">Last name: </label>
-                <input id="Lname" v-model="order.Lname"/>
+                <input id="Lname" v-model.trim="order.Lname"/>
 
                 <label for="address">Phone:</label>
-                <input id="address" v-model="order.Phone"/>
+                <input id="address" v-model.number="order.Phone"/>
                 <button type="button" v-on:click="postData()">
                     Place order
                 </button>

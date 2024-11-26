@@ -4,11 +4,16 @@ var app = new Vue({
     data() {
         return {
             showLessons: true,
+            sortOrder:1,
             Lessons:{},
             order: {
                 Fname: ``,
                 Lname: ``,
                 Phone: ``
+            },
+            filter: {
+                method: 1,
+                order: 1
             },
             Tuitions: [ ]
         };
@@ -53,9 +58,21 @@ var app = new Vue({
         itemleft(lesson) {
             return lesson.spaces;
         },
+        sortLessons() {
+            filter = this.filter
+            const compareDict = { 
+                1: (a, b) => a.subject.localeCompare(b.subject), 
+                2: (a, b) => a.location.localeCompare(b.location), 
+                3: (a, b) => a.spaces - b.spaces, 
+                4: (a, b) => a.price - b.price 
+            }; 
+            const compare = compareDict[this.filter.method]; 
+            const order = this.filter.order ;
+
+            return this.Lessons.sort((a, b) => order * compare(a, b));
+        },
         async postData() {
             let data = this.order;
-            console.log('Posting: ', data);
             try{
                 const response = await fetch('/collections/Orders', { 
                     method: 'POST',
