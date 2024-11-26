@@ -15,7 +15,8 @@ var app = new Vue({
                 method: 1,
                 order: 1
             },
-            Tuitions: [ ]
+            Tuitions: [],
+            status: []
         };
     },
     created:function(){
@@ -32,10 +33,21 @@ var app = new Vue({
     },
     methods: {
         addToCart(lesson) {
-            this.Tuitions.push(lesson.id);
+            this.Tuitions.push(lesson);
             lesson.spaces -= 1;
-            console.log(this.Tuitions.lenght);
-        }, 
+            console.log(this.Tuitions.length);
+        },
+        removeLesson(lesson) {
+            let arr = this.Tuitions;
+            let i = this.Tuitions.length;
+            while(i--){
+                if(arr[i].id == lesson.id && arr[i].subject == lesson.subject){
+                    lesson.spaces += 1;
+                    this.Tuitions.splice(i, 1);
+                    break
+                }
+            }   
+        },
         showCheckUot() {
             if(this.showLessons) {
                 this.showLessons = false;
@@ -71,27 +83,56 @@ var app = new Vue({
 
             return this.Lessons.sort((a, b) => order * compare(a, b));
         },
+        Checker(){
+
+        },
+        validateForm() { 
+            if (!this.order.Fname || this.order.Fname.length < 2) { 
+                this.status.push("First name must be at least 2 characters long."); 
+            } if (!this.order.Lname || this.order.Lname.length < 2) { 
+                this.status.push("Last name must be at least 2 characters long."); 
+            }
+
+            const phonePattern = /^\d{10}$/; 
+            if (!phonePattern.test(this.order.Phone)) 
+                { 
+                    this.status.push("Phone number must be 10 digits.");
+                } 
+            return this.status.length === 0;
+        },
         async postData() {
             let data = this.order;
-            try{
+            if (this.validateForm()) {
+                try{
                 const response = await fetch('/collections/Orders', { 
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(data)
                 });
-
                 console.log(response.status);
                 const result = await response.json(); 
-                console.log('Success:', result); 
+                console.log('Success:', result);
+                this.status.length === 0;S
+                this.status.push("Your order has been placed."); 
                 return result;
-            }catch(err){
-                console.error(err.message);
+                }catch(err){
+                    console.error(err.message);
+                }
+            }else { 
+                console.error('Validation errors:', this.status); 
             }
         }
     },
     computed: {
         itemsInCart:function() {
-            return this.Tuitions.lenght || "";
+            return this.Tuitions.length || "";
+        },
+        CanCheckout:function() {
+            return this.Tuitions.length > 0;
+        },
+        isFormValid:function() { 
+            return this.order.Fname && this.order.Lname && this.order.Phone 
+            && /^\d{10}$/.test(this.order.Phone);
         }
     }
 })

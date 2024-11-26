@@ -1,6 +1,6 @@
 .body{
     display: grid;
-    grid-template-rows: 50px auto 40px;
+    grid-template-rows: 50px auto;
 }
 
 .header{
@@ -8,8 +8,8 @@
     height: 60px;
     background-color: black;
 }
-.P_body{
-    grid-row: 2 / 3;
+.body{
+    grid-row: 2 / 4;
     background-color: darkblue;
     height: 100vh;
     display: grid;
@@ -17,26 +17,29 @@
     padding: 5px;
 }
 
-.S_header{
+.Home{
+    background-color: lightblue;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 50px auto;
+    padding: 5px;
+}
+
+.filter{
     grid-row: 1 / 2;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
     padding: 5px;
     background-color: brown;
 }
 
-.S_body{
+.lessons{
     grid-row: 2 / 3;
     background-color: lightblue;
     height: 100vh;
     display: flex;
     flex-wrap: wrap;
     padding: 5px;
-}
-
-.footer {
-    grid-row: 3 / 4;
-    background-color: azure;
 }
 
 .card {
@@ -48,12 +51,42 @@
     padding: 5px;
 }
 
-.subject_info {
-
+.Checkout {
+    grid-row: 1 / 4;
+    background-color: lightblue;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 10vh 90vh;
+    padding: 5px;
 }
 
-.subject_img {
+.order {
+    grid-row: 1 / 2;
+    display: grid;
+    grid-template-rows: 50% 50%;
+    padding: 5px;
+    background-color: brown;
+}
 
+.order_inputs{
+    grid-row: 1 / 2;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    background-color: whitesmoke;
+}
+
+.order_errors{
+    grid-row: 2 / 3;
+}
+
+.cart {
+    grid-row: 2 / 3;
+    background-color: lightblue;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    padding: 5px;
 }
 
 .button{
