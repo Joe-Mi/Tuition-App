@@ -6,16 +6,17 @@ var app = new Vue({
             showLessons: true,
             sortOrder:1,
             Lessons:{},
+            Tuitions: [],
             order: {
                 Fname: ``,
                 Lname: ``,
-                Phone: ``
+                Phone: ``,
+                items: {}
             },
             filter: {
                 method: 1,
                 order: 1
             },
-            Tuitions: [],
             status: []
         };
     },
@@ -34,8 +35,13 @@ var app = new Vue({
     methods: {
         addToCart(lesson) {
             this.Tuitions.push(lesson);
+            if(lesson.id in this.order.items){
+                this.order.items[lesson.id] += 1
+            } else{
+                this.order.items[lesson.id] = 1;
+            }
             lesson.spaces -= 1;
-            console.log(this.Tuitions.length);
+            console.log(this.order.items);
         },
         removeLesson(lesson) {
             let arr = this.Tuitions;
@@ -83,8 +89,38 @@ var app = new Vue({
 
             return this.Lessons.sort((a, b) => order * compare(a, b));
         },
-        Checker(){
+        async updateLessons(data){
+            try{
+                id = data._id
+                const response = await fetch(`/collections/Lessons/${id}`, { 
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({spaces: data.spaces})
+                });
 
+                if (!response.ok) { 
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                console.log(response.status);
+                const result = await response.json(); 
+                console.log('Success:', result); 
+                return result;
+            }catch(err){
+                    console.error(err.message);
+            }
+        },
+        async doublecheck(){
+            try{
+                for(let i = 0; i < this.Lessons.length; i++){
+                    if(this.Lessons[i].id in this.order.items){
+                        await this.updateLessons(this.Lessons[i]);
+                    }
+                }
+                return console.log("update succesful.");
+            } catch(err) {
+                console.error('Error during update:', err.message);
+            }
         },
         validateForm() { 
             if (!this.order.Fname || this.order.Fname.length < 2) { 
@@ -112,7 +148,9 @@ var app = new Vue({
                 console.log(response.status);
                 const result = await response.json(); 
                 console.log('Success:', result);
-                this.status.length === 0;S
+
+                this.status.length === 0;
+                this.doublecheck();
                 this.status.push("Your order has been placed."); 
                 return result;
                 }catch(err){
