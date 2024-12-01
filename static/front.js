@@ -1,4 +1,4 @@
-
+https://tuition-app-1.onrender.com
 var app = new Vue({
     el: "#app",
     data() {
@@ -22,7 +22,7 @@ var app = new Vue({
         };
     },
     created:function(){
-        fetch("http://localhost:3000/collections/Lessons").then(
+        fetch("https://tuition-app-1.onrender.com/collections/Lessons").then(
             function(response) {
                 response.json().then(
                     function(json) {
