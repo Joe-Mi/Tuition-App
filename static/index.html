@@ -17,6 +17,11 @@
             <div v-else>
                 <button disabled>Check out: {{Tuitions.length}}</button>
             </div>
+            <label for="SBar">Search: </label>
+            <input id="SBar" v-model.trim="search"/>
+            <button type="button" v-on:click="searchCollection">
+                search
+            </button>
         </div>
         <main class="body">
             <div class="Home" v-if="showLessons">

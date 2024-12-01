@@ -33,11 +33,25 @@ const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
 // let db = client.db(dbName);
 let db;
 
+async function createIndexes(db) { 
+    try { 
+        await db.collection("Lessons").createIndex({  
+            subject: "text", 
+            location: "text",
+            price: "text"
+        }); 
+        console.log("Indexes created successfully"); 
+    } catch (err) { 
+        console.error("Error creating indexes: ", err.message);
+    }
+}
+
 async function run() {
     try {
       // Connect the client to the server	(optional starting in v4.7)
       await client.connect();
       db = client.db(dbName);
+      await createIndexes(db);
       // Send a ping to confirm a successful connection
       await client.db(dbName).command({ ping: 1 });
       console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -53,18 +67,29 @@ app.param('collectionName', function(req, res, next, collectionName) {
     return next();
 });
 
+
 app.use((req, res, next) => {
     console.log("In comes a request to " + req.url)
     next();
 });
 
-app.get("/collections/products", function(req, res) {
-    res.json();
-});
-
 app.get('/collections/:collectionName', async function(req, res, next) {
     try{
         const results = await req.collection.find({}).toArray();
+        console.log("retrived: ", results);
+        res.json(results)
+    }
+    catch(err){
+        console.log("error fetching data: ", err.message);
+        next(err);
+    }
+});
+
+app.get('/collections/:collectionName/:search', async function(req, res, next) {
+    try{
+        const searchTerm = req.params.search
+        const query = { $text: { $search: searchTerm } };
+        const results = await req.collection.find(query).toArray();
         console.log("retrived: ", results);
         res.json(results)
     }
@@ -87,12 +112,21 @@ app.post('/collections/:collectionName', async function(req, res, next) {
     }
 });
 
-app.delete('/collections/:collectionName', async function(req, res, next) {
+app.put('/collections/:collectionName/:id', async function(req, res, next) {
     try{
         console.log("Recived request: ", req.params.id);
-        const result = await req.collection.deleteOne( { _id: new ObjectId(req.params.id) } );
-        console.log("deleted data: ", result);
-        res.json(result);
+        const result = await req.collection.updateOne(
+            {_id: new ObjectId(req.params.id)},
+            {$set: {"spaces": req.body.spaces}}, 
+            {safe: true, multi: false}
+        );
+        if (result.matchedCount === 1) { 
+            res.json({ msg: "success" }); 
+        } else {
+            res.json({ msg: "error" }); 
+        }
+
+        console.log("updated data: ", result);
     }
     catch(err){
         console.log("error fetching data: ", err.message);
@@ -109,5 +143,4 @@ app.listen(3000, function() {
 });
 
 run();
-
 

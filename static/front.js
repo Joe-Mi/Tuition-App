@@ -6,7 +6,7 @@ var app = new Vue({
             showLessons: true,
             sortOrder:1,
             Lessons:{},
-            Tuitions: [],
+            Tuitions:[],
             order: {
                 Fname: ``,
                 Lname: ``,
@@ -17,6 +17,7 @@ var app = new Vue({
                 method: 1,
                 order: 1
             },
+            search: '',
             status: []
         };
     },
@@ -89,7 +90,37 @@ var app = new Vue({
 
             return this.Lessons.sort((a, b) => order * compare(a, b));
         },
-        async updateLessons(data){
+        updateLessons(){
+            for(key in this.order.items){
+                for(let l = 0; l < this.Lessons.length; l++){
+                    if(this.Lessons[l] === key){
+                        this.lessons[l].spaces -= this.order.items[key];
+                    }
+                }
+            }
+        },
+        async searchCollection(){
+            try{
+                data = this.search
+                const response = await fetch(`/collections/Lessons/${encodeURIComponent(data)}`, { 
+                    method: 'GET',
+                    headers: {'Content-Type': 'application/json'}
+                });
+
+                if (!response.ok) { 
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                console.log(response.status);
+                const result = await response.json(); 
+                console.log('Success:', result);
+                this.Lessons = result;
+                this.updateLessons()
+            } catch(err) {
+                console.error(err.message);
+            }
+        },
+        async updateCollection(data){
             try{
                 id = data._id
                 const response = await fetch(`/collections/Lessons/${id}`, { 
@@ -107,14 +138,14 @@ var app = new Vue({
                 console.log('Success:', result); 
                 return result;
             }catch(err){
-                    console.error(err.message);
+                console.error(err.message);
             }
         },
         async doublecheck(){
             try{
                 for(let i = 0; i < this.Lessons.length; i++){
                     if(this.Lessons[i].id in this.order.items){
-                        await this.updateLessons(this.Lessons[i]);
+                        await this.updateCollection(this.Lessons[i]);
                     }
                 }
                 return console.log("update succesful.");
