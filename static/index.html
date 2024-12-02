@@ -10,23 +10,29 @@
 <body>
     <div id="app">
         <div class="header">
-            <button type="button"  v-if="CanCheckout" v-on:click="showCheckUot">
+            <button class="H_Checkout" type="button"  v-if="CanCheckout" v-on:click="showCheckUot">
                 <span class="fa-solid fa-cart-plus"></span>
                 Check out: {{Tuitions.length}}
             </button>
-            <div v-else>
+            <div class="H_Checkout" v-else>
                 <button disabled>Check out: {{Tuitions.length}}</button>
             </div>
-            <label for="SBar">Search: </label>
-            <input id="SBar" v-model.trim="search"/>
-            <button type="button" v-on:click="searchCollection">
-                search
-            </button>
+            <h2 class="H_title">
+                Tuition App
+            </h2>
+            <div class="H_search">
+                <label for="SBar">Search: </label>
+                <input id="SBar" v-model.trim="search"/>
+                <button type="button" v-on:click="searchCollection">
+                    search
+                </button>
+            </div>
+            
         </div>
-        <main class="body">
+        <main class="MainBody">
             <div class="Home" v-if="showLessons">
                 <div class="filter">
-                    <h2>Filter:</h2>
+                    <h3>Filter:</h3>
                     <select v-model="filter.method">
                         <option disabled value="">Filter</option>
                         <option value=1>Subject</option>

@@ -115,7 +115,7 @@ var app = new Vue({
                 const result = await response.json(); 
                 console.log('Success:', result);
                 this.Lessons = result;
-                this.updateLessons()
+                this.updateLessons();
             } catch(err) {
                 console.error(err.message);
             }
