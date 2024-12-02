@@ -5,26 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
     <link rel="stylesheet" href="front.css">
-    <title>Document</title>
+    <title>M00905343</title>
 </head>
 <body>
     <div id="app">
         <div class="header">
-            <button class="H_Checkout" type="button"  v-if="CanCheckout" v-on:click="showCheckUot">
+            <button class="Checkout_button" type="button"  v-if="CanCheckout" v-on:click="showCheckUot">
                 <span class="fa-solid fa-cart-plus"></span>
                 Check out: {{Tuitions.length}}
             </button>
-            <div class="H_Checkout" v-else>
-                <button disabled>Check out: {{Tuitions.length}}</button>
+            <div  v-else>
+                <button class="Checkout_button" disabled>Check out: {{Tuitions.length}}</button>
             </div>
             <h2 class="H_title">
                 Tuition App
             </h2>
             <div class="H_search">
-                <label for="SBar">Search: </label>
-                <input id="SBar" v-model.trim="search"/>
+                <input id="SBar" placeholder="type to seach" v-model.trim="search"/>
                 <button type="button" v-on:click="searchCollection">
-                    search
+                    Search
                 </button>
             </div>
             
@@ -33,7 +32,7 @@
             <div class="Home" v-if="showLessons">
                 <div class="filter">
                     <h3>Filter:</h3>
-                    <select v-model="filter.method">
+                    <select class="selection" v-model="filter.method">
                         <option disabled value="">Filter</option>
                         <option value=1>Subject</option>
                         <option value=2>Location</option>
@@ -42,11 +41,11 @@
                     </select>
                     <p>
                         <input type="radio" id="Asc" value=1 v-model="filter.order">
-                        <label for="Asc">:Ascending</label>
+                        <label for="Asc">: Ascending </label>
                         <input type="radio" id="Desc" value=-1 v-model="filter.order">
-                        <label for="Desc">:Descending</label>
+                        <label for="Desc">: Descending </label>
                     </p>
-                    <button type="button" v-on:click="sortLessons">filter</button>
+                    <button type="button" v-on:click="sortLessons">Filter</button>
                 </div>
                 <div class="lessons">
                     <div class="card" v-for="lesson in Lessons">
@@ -57,24 +56,24 @@
                         <p >Location: {{lesson.location}}</p>
                         <p >Price: £{{lesson.price}}</p>
                         <p >Space: {{lesson.spaces}}</p>
-                        <button type="button" v-if="CanAddToCart(lesson)" v-on:click="addToCart(lesson)">add to cart</button>
+                        <button type="button" class="card_button" v-if="CanAddToCart(lesson)" v-on:click="addToCart(lesson)">add to cart</button>
                         <div v-else>
-                            <button disabled>Add to cart</button>
+                            <button class="card_button" disabled>Add to cart</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="Checkout"  v-else>
+                <h2 class="checkout_title">Checkout:</h2>
                 <div class="order">
                     <div class="order_inputs">
-                        <h2>Checkout:</h2>
                         <label for="Fname">First name: </label>
                         <input id="Fname" v-model.trim="order.Fname" required/>
 
                         <label for="Lname">Last name: </label>
                         <input id="Lname" v-model.trim="order.Lname" required/>
 
-                        <label for="address">Phone:</label>
+                        <label for="address">Phone number:</label>
                         <input id="address" v-model.number="order.Phone" required pattern="\d{10}"/>
                         <button type="button"v-if="isFormValid" v-on:click="postData()">
                             Place order
@@ -85,7 +84,7 @@
                     </div>
                     <div class="order_errors">
                         <p v-if="status.length">
-                            <b>Please correct the following error(s):</b>
+                            <b>Status:</b>
                             <ul>
                               <li v-for="message in status">{{ message }}</li>
                             </ul>
@@ -100,7 +99,7 @@
                             <p >Subject: {{lesson.subject}}</p>
                             <p >Location: {{lesson.location}}</p>
                             <p >Price: £{{lesson.price}}</p>
-                            <button type="button" v-on:click="removeLesson(lesson)">remove</button>
+                            <button class="card_button" type="button" v-on:click="removeLesson(lesson)">remove</button>
                     </div>
                 </div>
             </div>

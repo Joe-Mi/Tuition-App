@@ -1,7 +1,9 @@
-#body{
+body{
     display: grid;
     grid-template-rows: 10vh 90vh;
-    background-color: brown;
+    background-color: rgb(20, 14, 14);
+    margin: 0;
+    padding: 0;
 }
 
 .header{
@@ -10,23 +12,23 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background-color: black;
+    background-color: rgb(237, 252, 255);
+    margin: 0%;
 }
-
-.H_Checkout{
-    background-color: brown;
+.Checkout_button{
+    background-color: lightblue;
+    padding: 5px;
+    margin: 10px;
+    width: 100px;
 }
 .H_title{
     grid-column: 2/3;
-    color: white;
-    background-color: brown;
+    color: rgb(32, 32, 49);
 }
-.H_search{
-    background-color: brown; 
-}
+
 .MainBody{
     grid-row: 2 / 4;
-    background-color: darkblue;
+    background-color: rgb(32, 32, 49);
     height: 118vh;
     display: grid;
     grid-template-rows: 50px auto;
@@ -34,7 +36,7 @@
 }
 
 .Home{
-    background-color: lightblue;
+    background-color: rgb(32, 32, 49);
     height: 115vh;
     display: grid;
     grid-template-rows: 10% 90%;
@@ -45,19 +47,25 @@
 .filter{
     grid-row: 1 / 2;
     height: auto;
+    color: rgb(237, 252, 255);
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: brown;
+    justify-content: space-evenly;
+    border: 3px azure solid;
+    border-radius: 10px;
+    background-color: rgb(75, 75, 138);
+    margin-bottom: 10px;
 }
 
 .lessons{
     grid-row: 2 / 3;
-    background-color: rgb(97, 172, 197);
+    background-color: rgb(75, 75, 138);
     height: 100vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    border: 3px solid;
+    border-radius: 10px;
     padding: 5px;
     overflow-y: scroll;
 }
@@ -67,49 +75,95 @@
     width: 25%;
     height: 250px;
     width: 200px;
+    border: 3px solid;
+    border-radius: 10px;
     margin: 5px;
-    padding: 5px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: last baseline;
 }
 
 .Checkout {
     grid-row: 1 / 4;
-    background-color: lightblue;
+    background-color: rgb(20, 14, 14);
     height: 115vh;
     display: grid;
-    grid-template-rows: 20vh 80vh;
-    padding: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    grid-template-rows: 8vh 35vh 72vh;
+}
+
+.checkout_title{
+    grid-row: 1 / 2;
+    color: rgb(237, 252, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .order {
-    grid-row: 1 / 2;
+    grid-row: 2 / 3;
     display: grid;
-    grid-template-rows: 50% 50%;
+    grid-template-columns: 50% 50%;
+    border-radius: 10px;
     padding: 5px;
-    background-color: brown;
+    margin-bottom: 10px;
+    background-color: rgb(75, 75, 138);
 }
 
 .order_inputs{
-    grid-row: 1 / 2;
+    grid-column: 1 / 2;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    background-color: whitesmoke;
+    border: 3px solid;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: azure;
 }
 
 .order_errors{
-    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+    color: rgb(237, 252, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .cart {
-    grid-row: 2 / 3;
-    background-color: rgb(0, 106, 141);
-    height: 93vh;
+    grid-row: 3 / 4;
+    background-color: rgb(75, 75, 138);
     display: flex;
     flex-wrap: wrap;
+    border-radius: 10px;
     overflow-y: scroll;
     padding: 5px;
 }
 
-#button{
+button{
     background-color: lightblue;
+    padding: 5px;
+    margin: 10px;
+    width: 70px;
 }
+
+.selection{
+    background-color: lightblue;
+    padding: 5px;
+    margin: 10px;
+    width: 200px;
+}
+
+.card_button{
+    background-color: lightblue;
+    padding: 5px;
+    margin: 10px;
+    margin-left: 11px;
+    width: 200px;
+    
+}
+
