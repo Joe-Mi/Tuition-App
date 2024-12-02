@@ -91,10 +91,11 @@ var app = new Vue({
             return this.Lessons.sort((a, b) => order * compare(a, b));
         },
         updateLessons(){
-            for(key in this.order.items){
+            for(const key in this.order.items){
                 for(let l = 0; l < this.Lessons.length; l++){
-                    if(this.Lessons[l] === key){
+                    if(this.Lessons[l].id === key){
                         this.lessons[l].spaces -= this.order.items[key];
+                        console.log("Updated: ", this.Lessons[l].id);
                     }
                 }
             }

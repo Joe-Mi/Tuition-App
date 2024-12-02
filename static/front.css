@@ -24,6 +24,7 @@ body{
 .H_title{
     grid-column: 2/3;
     color: rgb(32, 32, 49);
+    margin-left: 90px;
 }
 
 .MainBody{
@@ -79,9 +80,6 @@ body{
     border-radius: 10px;
     margin: 5px;
     padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: last baseline;
 }
 
 .Checkout {
@@ -160,10 +158,14 @@ button{
 
 .card_button{
     background-color: lightblue;
+    width: 200px;
+    margin-left: auto;
+}
+
+.Checkout_button{
+    background-color: lightblue;
     padding: 5px;
     margin: 10px;
-    margin-left: 11px;
-    width: 200px;
-    
+    width: 150px;
 }
 
