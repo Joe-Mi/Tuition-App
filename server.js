@@ -48,7 +48,7 @@ async function createIndexes(db) {
 
 async function run() {
     try {
-      // Connect the client to the server	(optional starting in v4.7)
+      // Connect the client to the server
       await client.connect();
       db = client.db(dbName);
       await createIndexes(db);
@@ -61,18 +61,20 @@ async function run() {
       await client.close();
     }
 }
-
+//Seting up the url parameter collection, 
+//allowing for easier access of collections within the database.
 app.param('collectionName', function(req, res, next, collectionName) {
     req.collection = db.collection(collectionName);
     return next();
 });
 
-
+// A simpke logging method, to see all the request made to the back-end. 
 app.use((req, res, next) => {
     console.log("In comes a request to " + req.url)
     next();
 });
 
+// A GET method to return all the Objects with a Collection.
 app.get('/collections/:collectionName', async function(req, res, next) {
     try{
         const results = await req.collection.find({}).toArray();
@@ -85,6 +87,7 @@ app.get('/collections/:collectionName', async function(req, res, next) {
     }
 });
 
+//A GET method used to search and retrieve an array of objects from a collection.
 app.get('/collections/:collectionName/:search', async function(req, res, next) {
     try{
         const searchTerm = req.params.search
@@ -99,6 +102,7 @@ app.get('/collections/:collectionName/:search', async function(req, res, next) {
     }
 });
 
+// A POST method used to insert objects into a collection.
 app.post('/collections/:collectionName', async function(req, res, next) {
     try{
         console.log("Recived request: ", req.body);
@@ -112,6 +116,7 @@ app.post('/collections/:collectionName', async function(req, res, next) {
     }
 });
 
+//A PUT method used to update specified objects in a colletion.
 app.put('/collections/:collectionName/:id', async function(req, res, next) {
     try{
         console.log("Recived request: ", req.params.id);
@@ -134,13 +139,16 @@ app.put('/collections/:collectionName/:id', async function(req, res, next) {
     }
 });
 
+//This logs any errors when trying to access resources that dont exsist.
 app.use(function(request, response) {
     response.status(404).send("Page not found!");
 });
 
+//initialise the appliction from the port: 3000.
 app.listen(3000, function() {
     console.log("CRUD app listening on port 3000");
 });
 
+//Connects to mongoDB, accessing the Database and it's colletions.
 run();
 

@@ -66,15 +66,6 @@ var app = new Vue({
         CanAddToCart(lesson) {//This function disables the addTocart button.
             return lesson.spaces >= 0;//In the event the spaces/availability are less than zero.
         },
-        cartCount(lesson) {//Check the number of lessons in the Cart.
-            let count = 0;
-            for(let i = 0; i < this.Tuitions.lenght; i++) {
-                if(this.Tuitions[i] === lesson.id){
-                    count ++
-                }
-            }
-            return count;
-        },
         sortLessons() {//This function sort the lesson array.
             filter = this.filter
             const compareDict = {//depending on the option it sort the array on subject, laction, etc.
