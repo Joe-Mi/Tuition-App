@@ -49,17 +49,20 @@
                 </div>
                 <div class="lessons">
                     <div class="card" v-for="lesson in filteredLessons" :key="lesson.id">
-                        <figure>
-                        <img class="width : 50px" src="lesson.image" alt="lesson-IMG">
+                        <figure class="Img_card">
+                        <img class="width : 50px" :src='lesson.image' alt="lesson-IMG">
                         </figure>
-                        <p >Subject: {{lesson.subject}}</p>
-                        <p >Location: {{lesson.location}}</p>
-                        <p >Price: £{{lesson.price}}</p>
-                        <p >Space: {{lesson.spaces}}</p>
-                        <button type="button" class="card_button" v-if="CanAddToCart(lesson)" v-on:click="addToCart(lesson)">add to cart</button>
-                        <div v-else>
-                            <button class="card_button" disabled>Add to cart</button>
+                        <div class="content">
+                            <p >Subject: {{lesson.subject}}</p>
+                            <p >Location: {{lesson.location}}</p>
+                            <p >Price: £{{lesson.price}}</p>
+                            <p >Space: {{lesson.spaces}}</p>
+                            <button type="button" class="card_button" v-if="CanAddToCart(lesson)" v-on:click="addToCart(lesson)">add to cart</button>
+                            <div v-else>
+                                <button class="card_button" disabled>Add to cart</button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -93,13 +96,15 @@
                 </div>
                 <div class="cart">
                     <div class="card" v-for="lesson in Tuitions">
-                        <figure>
-                            <img class="width : 50px" src="lesson.image" alt="lesson-IMG">
-                            </figure>
+                        <figure class="Img_card">
+                        <img class="width : 50px" :src='lesson.image' alt="lesson-IMG">
+                        </figure>
+                        <div class="content">
                             <p >Subject: {{lesson.subject}}</p>
                             <p >Location: {{lesson.location}}</p>
                             <p >Price: £{{lesson.price}}</p>
                             <button class="card_button" type="button" v-on:click="removeLesson(lesson)">remove</button>
+                        </div>
                     </div>
                 </div>
             </div>

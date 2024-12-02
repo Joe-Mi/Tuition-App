@@ -73,13 +73,14 @@ body{
 
 .card {
     background-color: azure;
-    width: 25%;
-    height: 250px;
-    width: 200px;
+    width: 250px;
+    height: 360px;
     border: 3px solid;
     border-radius: 10px;
     margin: 5px;
-    padding: 20px;
+    display: grid;
+    grid-row: 45% 55%;
+    justify-content: center;
 }
 
 .Checkout {
@@ -169,3 +170,16 @@ button{
     width: 150px;
 }
 
+.card .content {
+    grid-row: 2/3;
+    color: rgb(75, 75, 138);
+    padding: 25px;
+}
+
+.Img_card{
+    grid-row: 1/2;
+    height: 100%;
+    border-radius: 10px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
