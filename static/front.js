@@ -5,8 +5,9 @@ var app = new Vue({
         return {
             showLessons: true,
             sortOrder:1,
-            Lessons:{},
+            Lessons:[],
             Tuitions:[],
+            searchResults: [],
             order: {
                 Fname: ``,
                 Lname: ``,
@@ -22,7 +23,7 @@ var app = new Vue({
         };
     },
     created:function(){
-        fetch("https://tuition-app-1.onrender.com/collections/Lessons").then(
+        fetch("http://localhost:3000/collections/Lessons").then(
             function(response) {
                 response.json().then(
                     function(json) {
@@ -90,16 +91,6 @@ var app = new Vue({
 
             return this.Lessons.sort((a, b) => order * compare(a, b));
         },
-        updateLessons(){
-            for(const key in this.order.items){
-                for(let l = 0; l < this.Lessons.length; l++){
-                    if(this.Lessons[l].id === key){
-                        this.lessons[l].spaces -= this.order.items[key];
-                        console.log("Updated: ", this.Lessons[l].id);
-                    }
-                }
-            }
-        },
         async searchCollection(){
             try{
                 data = this.search
@@ -115,8 +106,11 @@ var app = new Vue({
                 console.log(response.status);
                 const result = await response.json(); 
                 console.log('Success:', result);
-                this.Lessons = result;
-                this.updateLessons();
+                this.searchResults = result;
+
+                if (!result.length) { 
+                    console.log('No lessons found for the given search term.');
+                }
             } catch(err) {
                 console.error(err.message);
             }
@@ -203,6 +197,12 @@ var app = new Vue({
         isFormValid:function() { 
             return this.order.Fname && this.order.Lname && this.order.Phone 
             && /^\d{10}$/.test(this.order.Phone);
+        },
+        filteredLessons:function() {
+            if (this.searchResults.length === 0) { 
+                return this.Lessons;
+            }
+            return this.Lessons.filter(lesson => this.searchResults.some(result => result.id === lesson.id));
         }
     }
 })

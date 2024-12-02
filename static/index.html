@@ -48,7 +48,7 @@
                     <button type="button" v-on:click="sortLessons">Filter</button>
                 </div>
                 <div class="lessons">
-                    <div class="card" v-for="lesson in Lessons">
+                    <div class="card" v-for="lesson in filteredLessons" :key="lesson.id">
                         <figure>
                         <img class="width : 50px" src="lesson.image" alt="lesson-IMG">
                         </figure>
